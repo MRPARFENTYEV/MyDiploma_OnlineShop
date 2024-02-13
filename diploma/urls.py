@@ -17,15 +17,23 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from rest_framework.routers import DefaultRouter
+# from shop.views import ShopViewSet, CategoryViewSet
 
-from shop.views import ClientViewSet, ProductViewSet, CategoryViewSet, index, about
+from shop.views import (ClientViewSet, ProductViewSet, CategoryViewSet, ShopViewSet,
+                        ProductInfoViewSet,ParameterViewSet, OrderViewSet)
+# index, about
 
 r = DefaultRouter()
 r.register('clients', ClientViewSet)
 r.register('products', ProductViewSet)
-r.register('categories', CategoryViewSet)
+r.register('category', CategoryViewSet)
+r.register('shop',ShopViewSet)
+r.register('productInfo',ProductInfoViewSet)
+r.register('parameters',ParameterViewSet)
+r.register('orders',OrderViewSet)
+# r.register('shop',ShopViewSet)
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', index, name='index'),
-    path('about/', about, name='about')
-] + r.urls
+    path('admin/', admin.site.urls)
+    # path('', index, name='index'),
+    # path('about/', about, name='about')
+]+ r.urls
