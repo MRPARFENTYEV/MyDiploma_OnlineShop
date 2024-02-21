@@ -17,7 +17,7 @@ class Shop(models.Model):
 
 class Category(models.Model):
     name = models.CharField(max_length=200, db_index=True)
-    shops = models.ManyToManyField(Shop, related_name='shops')
+    shops = models.ManyToManyField(Shop, related_name='shops',through='ShopCategory')
 
     class Meta:
         ordering = ('name',)
@@ -54,7 +54,7 @@ class Product(models.Model):
 
 
     def __str__(self):
-        return self.name
+        return self.name, self.category
 
 class ProductInfo(models.Model):
     product = models.ForeignKey(Product,related_name='products',on_delete= models.CASCADE)
@@ -65,13 +65,22 @@ class ProductInfo(models.Model):
             decimal_places=2,
             validators=[MinValueValidator(0)],
         )
+    def __str__(self):
+        return self.product, self.quantity, self.price
+
 class Parameter(models.Model):
     name = models.CharField(max_length=200, db_index=True)
+    def __str__(self):
+        return self.name
+
 
 class ProductParameter(models.Model):
     product_info = models.ForeignKey(ProductInfo,related_name='ProductInfoes',on_delete= models.CASCADE)
     parameter = models.ForeignKey(Parameter,related_name='parameters',on_delete= models.CASCADE)
     value = models.CharField(max_length=20)
+    def __str__(self):
+        return self.product_info
+
 
 class Client(models.Model):
     name = models.CharField(max_length=25)
@@ -89,6 +98,8 @@ class Order(models.Model):
     client = models.ForeignKey(Client, related_name='clients',on_delete= models.CASCADE)
     dt = models.DateTimeField(auto_now_add=True)
     status = models.BooleanField(default=True)
+    def __str__(self):
+        return self.status
 # готов ли заказ?
 '''________________________________________________________________________'''
 # class ConfirmEmailToken(models.Model):

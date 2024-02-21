@@ -33,7 +33,7 @@ r.register('parameters',ParameterViewSet)
 r.register('orders',OrderViewSet)
 # r.register('shop',ShopViewSet)
 urlpatterns = [
-    path('admin/', admin.site.urls)
-    # path('', index, name='index'),
+    path('admin/', admin.site.urls),
+    # path('products/', ProductViewSet.as_view()),
     # path('about/', about, name='about')
 ]+ r.urls
